@@ -15,33 +15,24 @@ int findCircleNum(const vector<vector<int>> &mat)
             continue;
         check[i] = 1;
         for (int j = 0; j < n; ++j)
-        {
-            if (j == i)
-                continue;
-            if (mat[i][j])
+            if (i != j && mat[i][j] && !check[j])
                 city.push(j);
-        }
+
         while (!city.empty())
         {
             int cur = city.top();
             city.pop();
-            if (check[cur])
-                continue;
             check[cur] = 1;
             for (int c = 0; c < n; ++c)
-            {
-                if (c == cur)
-                    continue;
-                if (mat[cur][c])
+                if (c != cur && mat[cur][c] && !check[c])
                     city.push(c);
-            }
         }
         ++province;
     }
     return province;
 }
 
-int main() 
+int main()
 {
     int n;
     cin >> n;
