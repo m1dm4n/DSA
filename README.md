@@ -7,7 +7,7 @@ Bạn được cung cấp một ma trận **n x n** isConnected trong đó **isC
 
 Tính số lượng các tỉnh.
 
-- Ví dụ:
+- Ví dụ: <br>
 ![image](https://user-images.githubusercontent.com/92845822/174081873-13ada441-a992-4ee6-9de3-8742c34104b5.png)
 
 > Bài gốc: [Leetcode - Number of Provinces](https://leetcode.com/problems/number-of-provinces/) 
