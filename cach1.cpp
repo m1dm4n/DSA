@@ -6,30 +6,30 @@ using namespace std;
 
 int findCircleNum(const vector<vector<int>> &mat)
 {
-    int n = mat.size(), province = 0;
+    int n = mat.size(), provinces = 0;
     vector<bool> check(n, false);
-    stack<int> city;
     for (int i = 0; i < n; ++i)
     {
         if (check[i])
             continue;
+        stack<int> city;
+        city.push(i);
         check[i] = 1;
-        for (int j = 0; j < n; ++j)
-            if (i != j && mat[i][j] && !check[j])
-                city.push(j);
 
         while (!city.empty())
         {
             int cur = city.top();
             city.pop();
-            check[cur] = 1;
             for (int c = 0; c < n; ++c)
-                if (c != cur && mat[cur][c] && !check[c])
+                if (mat[cur][c] && !check[c])
+                {
+                    check[c] = 1;
                     city.push(c);
+                }
         }
-        ++province;
+        ++provinces;
     }
-    return province;
+    return provinces;
 }
 
 int main()

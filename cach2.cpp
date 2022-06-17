@@ -1,64 +1,37 @@
 #include <vector>
-#include <stack>
+#include <queue>
 #include <iostream>
 
 using namespace std;
 
-int cnt = 0;
-
-struct DSU {
-    vector<int> root;
-    vector<int> rank;
-    
-};
-
-void uf(DSU &dsu, const int &n)
+int findCircleNum(const vector<vector<int>> &mat)
 {
-    dsu.root.resize(n);
-    dsu.rank.resize(n);
-    cnt = n;
+    int n = mat.size(), provinces = 0;
+    vector<bool> check(n, false);
     for (int i = 0; i < n; ++i)
     {
-        dsu.root[i] = i;
-        dsu.rank[i] = 1;
-    }
-}
-int find(DSU &dsu, const int &a)
-{
-    if (a == dsu.root[a])
-        return a;
-    return dsu.root[a] = find(dsu, dsu.root[a]);
-}
-void uni(DSU &dsu, const int &a, const int &b)
-{
-    int roota = find(dsu, a), rootb = find(dsu, b);
-    if (roota != rootb)
-    {
-        if (dsu.rank[roota] > dsu.rank[rootb])
-            dsu.root[rootb] = roota;
-        else if (dsu.rank[roota] < dsu.rank[rootb])
-            dsu.root[roota] = rootb;
-        else
+        if (check[i])
+            continue;
+        queue<int> city;
+        city.push(i);
+        check[i] = 1;
+
+        while (!city.empty())
         {
-            dsu.root[rootb] = roota;
-            ++dsu.rank[roota];
+            int cur = city.front();
+            city.pop();
+            for (int c = 0; c < n; ++c)
+                if (mat[cur][c] && !check[c])
+                {
+                    check[c] = 1;
+                    city.push(c);
+                }
         }
-        --cnt;
+        ++provinces;
     }
+    return provinces;
 }
-int findCircleNum(vector<vector<int>> &mat)
-{
-    DSU dsu;
-    int n = mat.size();
-    uf(dsu, n);
-    for (int i = 0; i < n; ++i)
-    {
-        for (int j = 0; j < n; ++j)
-            if (mat[i][j])
-                uni(dsu, i, j);
-    }
-    return cnt;
-}
+
 int main()
 {
     int n;
